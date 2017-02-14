@@ -35,3 +35,16 @@ void* hello(void* rank){
 	cout << "Hello from thread_" << my_rank << " of " << thread_count << endl;
 	pthread_mutex_unlock(&c_lock);
 }
+
+/*#include <iostream>
+#include <cstdlib>
+#include <pthread.h>
+#define SIZE 500000000
+using namespace std;
+
+int sample[SIZE];
+
+int main(){
+	cout << SIZE << endl;
+	return 0;
+}*/
