@@ -15,7 +15,7 @@
 #include <time.h>
 #include <stdio.h>
 using namespace std;
-#define MAX 50000000 // Could not go higher
+#define MAX 500000000
 #define BILLION 1000000000L //used for nanosecond
 
 pthread_mutex_t c_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]){
 	for(int i = 0; i < MAX; i++){
 		my_array[i] = i+1;
 	}
-	
+	cout << size_t(my_array) << endl;
 	thread_count = atoi(argv[1]);
 	pthread_t myThreads[thread_count];
 
