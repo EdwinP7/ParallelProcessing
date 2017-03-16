@@ -8,8 +8,7 @@
 
 	To compile and run in Linux terminal:
 	$>g++ -o source.cpp source
-	$>./source [num_threads] [a_rows] [a_cols_b_rows] [b_c_cols]
-
+	$>./source [thread_count] [l] [m] [n]
 
 */
 
@@ -58,9 +57,6 @@ int main(int argc, char* argv[]){
 	}
 
 
-	
-
-	/*
 	for(int thread_id = 0; thread_id < thread_c; thread_id++)
 		pthread_create(&my_threads[thread_id], NULL, compute, (void*)thread_id);
 
@@ -68,27 +64,63 @@ int main(int argc, char* argv[]){
 		pthread_join(my_threads[thread_id]);
 
 	cout << thread_c << "\n";
-	*/
+
 	return 0;
 }
 
-int** init2dArray(int rows, int cols, int add){
+int** dec2dArray(int rows, int cols, int add){
 	int** matrix = new int*[rows];
 	for(int i = 0; i < rows; i++)
 		matrix[i] = new int[cols];
 
-	for(int i = 0; i < rows; i++)
-		for(int j = 0; j < cols; j++)
-			matrix[i][j] = i+j+add;
-
 	return matrix;
 }
 
+void initA(){
+	for(int i = 0; i < l; i++)
+		for(int j = 0; j < m; j++)
+			matrix_a[i][j] = i+j+1;
+}
+
+void initB(){
+	for(int i = 0; i < m; i++)
+		for(int j = 0; j < n; j++)
+			matrix_b[i][j] = i+j;
+}
 
 
 void free2dArray(int** arr){
 	for(int i = 0; i < n; i++)
 		delete [] arr[i];
 	delete [] arr;
+
+}
+
+void* matrixMult(void* rank){
+	long my_rank = (long) rank;
+	int quot, my_first_i, my_last_i, my_count, my_sum;
+	int quot = L / thread_c;
+	int rem = L % thread_c
+
+	if(my_rank < rem){
+		my_count = quot + 1;
+		my_first_i = my_rank * my_count;
+	}
+	else{
+		my_count = quot;
+		my_first_i = my_rank * my_count + rem;
+	}
+	my_last_i = my_rank * my_count + rem;
+
+	for(int i = my_first_i; i <= my_last_i; i++){
+		my_sum = 0;
+		for(int j = 0; j < n; j++)
+			for(int k = 0; k < m; k++)
+				my_sum += matrix_a[i][j] * matrix_b[j][i];
+		matrix_c[i][j] = my_sum;
+	} 
+
+
+
 
 }
